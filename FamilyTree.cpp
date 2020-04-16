@@ -1,73 +1,86 @@
-#include "FamilyTree.hpp"
 #include <iostream>
+#include "FamilyTree.hpp"
 
-using namespace std;
 namespace family
 {
-    class Node
+class Tree
     {
         private:
-            string _name;
-            Node *_mother;
-            Node *_father;
+            std::string _name;
+            Tree *_mother;
+            Tree *_father;
         public:
-            Node(string name)
+            Tree(std::string name)
             {
                 _name = name;
+                _mother = NULL;
+                _father = NULL;
             }
-            void addFather(string name)
+            std::string getName()
             {
-                Node *f = new Node(name);
-                _father = f;
+                return _name;
             }
-            void addMother(string name)
+            int addFather(std::string son, std::string name)
             {
-                Node *m = new Node(name);
-                _mother = m;
+                if(son == _name)
+                {
+                    if(_father == NULL)
+                    {
+                        _father = new Tree(name);
+                        return 0;// every thing went OK
+                    }
+                    return 1; // already has father
+                }
+                    if(_father != NULL)
+                    {
+                        _father->addFather(son, name);
+                    }
+                    if(_mother != NULL)
+                    {
+                        _mother->addFather(son, name);
+                    }
+                return 2; // no one has the same name as son
             }
-            ~Node()
+            int addMother(std::string son, std::string name)
             {
-                delete(_father);
-                delete(_mother);
+                if(son == _name)
+                {
+                    if(_mother == NULL)
+                    {
+                        _mother = new Tree(name);
+                        return 0;// every thing went OK
+                    }
+                    return 1; // already has father
+                }
+                    if(_father != NULL)
+                    {
+                        _father->addMother(son, name);
+                    }
+                    if(_mother != NULL)
+                    {
+                        _mother->addMother(son, name);
+                    }
+                return 2; // no one has the same name as son
             }
-    };
-
-    class Tree
-    {
-        private:
-            Node *_root;
-        public:
-            Tree(string name)
+            std::string relation(std::string name)
             {
-                _root = new Node(name);
+                return "";
             }
-            Tree addFather(string son, string name)
+            std::string find(std::string rel)
             {
-               return *this; 
-            }
-            Tree addMother(string son, string name)
-            {
-                return *this;
-            }
-            string relation(string name)
-            {
-                return "name";
-            }
-            string find(string rel)
-            {
-                return "name";
+                return "";
             }
             void display()
             {
 
             }
-            void remove(string name)
+            void remove(std::string name)
             {
 
             }
             ~Tree()
             {
-                delete(_root);
+                
             }
     };
 }
