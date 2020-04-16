@@ -1,14 +1,12 @@
 #include <iostream>
 
-namespace family
-{
-class Tree{};
+namespace family{
 class Tree
     {
         private:
             std::string _name;
-            family::Tree _mother;
-            family::Tree _father;
+            Tree *_mother;
+            Tree *_father;
         public:
             Tree(std::string name);
             int addFather(std::string son, std::string name);

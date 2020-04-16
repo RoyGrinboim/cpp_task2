@@ -6,7 +6,6 @@
  */
 
 #include "FamilyTree.hpp"
-
 #include <iostream>
 using namespace std;
 
