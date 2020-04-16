@@ -1,14 +1,13 @@
 #include <iostream>
+#include <string>
 #include "FamilyTree.hpp"
 
-namespace family
-{
-class Tree
+namespace family{
+class Tree;
+}
+
+class family::Tree
     {
-        private:
-            std::string _name;
-            Tree *_mother;
-            Tree *_father;
         public:
             Tree(std::string name)
             {
@@ -33,34 +32,39 @@ class Tree
                 }
                     if(_father != NULL)
                     {
-                        _father->addFather(son, name);
+                        return _father->addFather(son, name);
                     }
                     if(_mother != NULL)
                     {
-                        _mother->addFather(son, name);
+                        return _mother->addFather(son, name);
                     }
                 return 2; // no one has the same name as son
             }
-            int addMother(std::string son, std::string name)
+            Tree* addMother(std::string son, std::string name)
+            {
+                this->addM(son, name);
+                return this;
+            }
+            void addM(std::string son, std::string name)
             {
                 if(son == _name)
                 {
                     if(_mother == NULL)
                     {
                         _mother = new Tree(name);
-                        return 0;// every thing went OK
+                        return;// every thing went OK
                     }
-                    return 1; // already has father
+                    return; // already has father
                 }
                     if(_father != NULL)
                     {
-                        _father->addMother(son, name);
+                        return _father->addM(son, name);
                     }
                     if(_mother != NULL)
                     {
-                        _mother->addMother(son, name);
+                        return _mother->addM(son, name);
                     }
-                return 2; // no one has the same name as son
+                return; // no one has the same name as son
             }
             std::string relation(std::string name)
             {
@@ -82,5 +86,8 @@ class Tree
             {
                 
             }
+        private:
+            std::string _name;
+            Tree *_mother;
+            Tree *_father;
     };
-}
